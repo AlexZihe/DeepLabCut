@@ -31,6 +31,10 @@ import matplotlib.pyplot as plt
 
 Labels = ['.', '+', '*']  # order of labels for different scorers
 
+Colorscheme = ['r', 'g', 'y', 'b', 'm', 'r', 'g', 'y',
+               'b']  # colors for those bodyparts.
+unvisibleboundary = 100  # see metadata / when bodypart not visible!
+
 #############################################
 # Make sure you update the train.yaml file!
 #############################################
@@ -38,15 +42,6 @@ Labels = ['.', '+', '*']  # order of labels for different scorers
 num_joints = len(bodyparts)
 all_joints = map(lambda j: [j], range(num_joints))
 all_joints_names = bodyparts
-
-
-# https://stackoverflow.com/questions/14720331/how-to-generate-random-colors-in-matplotlib
-def get_cmap(n, name='hsv'):
-    '''Returns a function that maps each index in 0, 1, ..., n-1 to a distinct
-    RGB color; the keyword argument name must be a standard mpl colormap name.'''
-    return plt.cm.get_cmap(name, n)
-
-Colorscheme = get_cmap(len(bodyparts))
 
 print(num_joints)
 print(all_joints)
@@ -96,11 +91,7 @@ for folder in folders:
         image = io.imread(imagename)
         plt.axis('off')
 
-        if np.ndim(image)==2:
-            h, w = np.shape(image)
-        else:
-            h, w, nc = np.shape(image)
-
+        h, w, nc = np.shape(image)
         plt.figure(
             frameon=False, figsize=(w * 1. / 100 * scale, h * 1. / 100 * scale))
         plt.subplots_adjust(
@@ -119,7 +110,7 @@ for folder in folders:
                     DataCombined[scorer][bp]['x'].values[imindex],
                     DataCombined[scorer][bp]['y'].values[imindex],
                     Labels[cc],
-                    color=Colorscheme(c),
+                    color=Colorscheme[c],
                     alpha=.5,
                     ms=msize)
 

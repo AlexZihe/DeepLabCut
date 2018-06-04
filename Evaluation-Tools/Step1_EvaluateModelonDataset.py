@@ -104,16 +104,14 @@ for shuffle in Shuffles:
 
         if snapshotindex == -1:
             snapindices = [-1]
-        elif snapshotindex == "all":
+        elif snapshotindex == all:
             snapindices = range(len(Snapshots))
-        elif snapshotindex<len(Snapshots):
-            snapindices=[snapshotindex]
         else:
-            print("Invalid choice, only -1 (last), any integer up to last, or all (as string)!")
+            print("Invalid choice, only -1 or all!")
 
         for snapindex in snapindices:
             cfg['init_weights'] = modelfolder + \
-                '/train/' + Snapshots[snapindex]
+                '/train/' + Snapshots[snapshotindex]
             trainingsiterations = (
                 cfg['init_weights'].split('/')[-1]).split('-')[-1]
             scorer = 'DeepCut' + "_resnet" + str(cfg["net_type"]) + "_" + str(
@@ -121,7 +119,7 @@ for shuffle in Shuffles:
                     100)) + 'shuffle' + str(shuffle) + '_' + str(
                         trainingsiterations) + "forTask:" + Task
 
-            print("Running ", scorer, " with # of trainingiterations:", trainingsiterations)
+            print("Running ", scorer, trainingsiterations)
 
             try:
                 Data = pd.read_hdf('Data_h5/' + scorer + '.h5',
@@ -130,7 +128,7 @@ for shuffle in Shuffles:
             except:
                 # Specifying state of model (snapshot / training state)
                 cfg['init_weights'] = modelfolder + \
-                    '/train/' + Snapshots[snapindex]
+                    '/train/' + Snapshots[snapshotindex]
                 sess, inputs, outputs = predict.setup_pose_prediction(cfg)
 
             # Loading image:

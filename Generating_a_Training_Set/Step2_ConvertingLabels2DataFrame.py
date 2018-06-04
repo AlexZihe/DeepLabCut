@@ -26,35 +26,19 @@ import pandas as pd
 import os
 import sys
 sys.path.append(os.getcwd().split('Generating_a_Training_Set')[0])
-from myconfig import Task, bodyparts, Scorers, invisibleboundary, multibodypartsfile, multibodypartsfilename
-
-basefolder = 'data-' + Task + '/'
-
-
-###################################################
-# Code if all bodyparts (per folder are shared in one file)
-# This code below converts it into multiple csv files per body part & folder
-# Based on an idea by @sneakers-the-rat
-###################################################
-
-if multibodypartsfile==True:
-    folders = [name for name in os.listdir(basefolder) if os.path.isdir(os.path.join(basefolder, name))]    
-    for folder in folders:
-        # load csv, iterate over nth value in a grouping by frame, save to bodyparts files
-        dframe = pd.read_csv(os.path.join(basefolder,folder,multibodypartsfilename))
-        frame_grouped = dframe.groupby('Slice') #Note: the order of bodyparts list in myconfig and labels must be identical!
-        for i, bodypart in enumerate(bodyparts):
-            part_df = frame_grouped.nth(i)
-            part_fn =  part_fn = os.path.join(basefolder,folder,bodypart+'.csv')
-            part_df.to_csv(part_fn)
+from myconfig import Task, bodyparts, Scorers, invisibleboundary
 
 ###################################################
 # Code if each bodypart has its own label file!
 ###################################################
 
+###################################################
+basefolder = 'data-' + Task + '/'
+
 # Data frame to hold data of all data sets for different scorers,
 # bodyparts and images
 DataCombined = None
+
 for scorer in Scorers:
     os.chdir(basefolder)
     # Make list of different video data sets / each one has its own folder
@@ -98,21 +82,21 @@ for scorer in Scorers:
             for bodypart in bodyparts:
                 datafile = bodypart
                 try:
-                    dframe = pd.read_csv(datafile + ".xls",sep=None,engine='python') #, sep='\t')
+                    dframe = pd.read_csv(datafile + ".xls", sep='\t')
                 except:
                     os.rename(datafile + ".csv", datafile + ".xls")
-                    dframe = pd.read_csv(datafile + ".xls",sep=None,engine='python') #, sep='\t')
+                    dframe = pd.read_csv(datafile + ".xls", sep='\t')
 
-                # Note: If your csv file is not correctly loaded, then a common error is:
-                # "AttributeError: 'DataFrame' object has no attribute 'X'" or the corresponding error with Slice
-                # Try to make sure you specify the seperator of the csv file correctly. See https://github.com/AlexEMG/DeepLabCut/issues/10 for details.
-                
                 if dframe.shape[0] != len(imageaddress):
+                    # Filling up with nans
+                    # dframe.set_index('Slice')
                     new_index = pd.Index(
                         np.arange(len(files)) + 1, name='Slice')
                     dframe = dframe.set_index('Slice').reindex(new_index)
                     dframe = dframe.reset_index()
-                
+                # print(dframe.index)
+                # print(frame.head())
+                # print(bodypart)
                 index = pd.MultiIndex.from_product(
                     [[scorer], [bodypart], ['x', 'y']],
                     names=['scorer', 'bodyparts', 'coords'])
