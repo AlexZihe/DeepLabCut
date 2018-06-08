@@ -140,11 +140,12 @@ for video in videos:
 
         os.chdir(tmpfolder)
 
-        print("Generating video")
-        subprocess.call([
-            'ffmpeg', '-framerate',
-            str(clip.fps), '-i', 'file%04d.png', '-r', '30', vname + '.mp4'
-        ])
+# Alex Zhang Commented the process of generating videos from labeled frames
+#        print("Generating video")
+#        subprocess.call([
+#            'ffmpeg', '-framerate',
+#            str(clip.fps), '-i', 'file%04d.png', '-r', '30', vname + '.mp4'
+#        ])
         if deleteindividualframes:
             for file_name in glob.glob("*.png"):
                 os.remove(file_name)

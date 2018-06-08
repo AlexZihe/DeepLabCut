@@ -82,10 +82,12 @@ for scorer in Scorers:
             for bodypart in bodyparts:
                 datafile = bodypart
                 try:
-                    dframe = pd.read_csv(datafile + ".xls", sep='\t')
+                    dframe = pd.read_csv(datafile + ".xls")
+		    #dframe = pd.read_csv(datafile + ".xls", sep ='\t')
                 except:
                     os.rename(datafile + ".csv", datafile + ".xls")
-                    dframe = pd.read_csv(datafile + ".xls", sep='\t')
+                    dframe = pd.read_csv(datafile + ".xls")
+		    #dframe = pd.read_csv(datafile + ".xls", sep ='\t')
 
                 if dframe.shape[0] != len(imageaddress):
                     # Filling up with nans

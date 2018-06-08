@@ -22,14 +22,16 @@ y2 = 624
 
 scorer = 'Mackenzie'
 Task = 'reaching'
-date = 'Jan1'
+date = 'Jan30' # fixed by Alex Zhang 
+# date = 'Jan1' 
 trainingsFraction = 0.95  # Fraction of labeled images used for training
 resnet = 50
 snapshotindex = -1
 shuffle = 1
 
 # For plotting:
-trainingsiterations = 750000  # type the number listed in .pickle file
+trainingsiterations = 1030000 # changed by Alex Zhang
+#trainingsiterations = 750000  # type the number listed in .pickle file
 pcutoff = 0.1  # likelihood cutoff for body part in image
 # delete individual (labeled) frames after making video?
 deleteindividualframes = False

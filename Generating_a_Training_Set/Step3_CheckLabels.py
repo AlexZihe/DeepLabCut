@@ -69,7 +69,8 @@ folders = [
 print(folders)
 # videos=np.sort([fn for fn in os.listdir(os.curdir) if ("avi" in fn)])
 scale = 1  # for plotting
-msize=25   #size of labels
+msize=2   #size of labels
+#msize=25   #size of labels #Alex Zhang: you can change the size of the label accordingly
 
 for folder in folders:
     tmpfolder = folder + 'labeled'
@@ -91,7 +92,7 @@ for folder in folders:
         image = io.imread(imagename)
         plt.axis('off')
 
-        h, w, nc = np.shape(image)
+        h, w = np.shape(image) # edited by Alex Zhang
         plt.figure(
             frameon=False, figsize=(w * 1. / 100 * scale, h * 1. / 100 * scale))
         plt.subplots_adjust(

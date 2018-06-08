@@ -35,7 +35,7 @@ portion = 1
 # Step 2:
 ########################################
 
-bodyparts = ["snout", "frontleft", "hindleft", "tailbase", "hindright", "frontright"]  # Exact sequence of labels as were put by
+bodyparts = ["snout", "frontleft", "hindleft", "tailbase", "backrightpaw", "frontrightpaw"]  # Exact sequence of labels as were put by
 
 # annotator in *.csv file
 Scorers = ['Mackenzie']  # who is labeling?
