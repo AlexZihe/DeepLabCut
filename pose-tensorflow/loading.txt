@@ -1,0 +1,2 @@
+module load gcc/6.2.0 cuda/9.0 python/3.6.0
+source GPUIDPaw2/bin/activate
