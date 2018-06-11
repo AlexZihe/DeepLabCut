@@ -36,6 +36,10 @@ python3 Step4_GenerateTrainingFileFromLabelledData.py
 cp -R ~/DeepLabCut-100by100/Generating_a_Training_Set/reachingJan30-trainset95shuffle1 ~/DeepLabCut-100by100/pose-tensorflow/models/
 cp -R ~/DeepLabCut-100by100/Generating_a_Training_Set/UnaugmentedDataSet_reachingJan30/ ~/DeepLabCut-100by100/pose-tensorflow/models/
 
+cd ~/DeepLabCut-100by100/pose-tensorflow/models/pretrained
+bash download
+
+#download pretrained resnet-50 and resnet-100
 
 cd ~/DeepLabCut-100by100/pose-tensorflow/models/reachingJan30-trainset95shuffle1/train
 python3 ~/DeepLabCut-100by100/pose-tensorflow/train.py
