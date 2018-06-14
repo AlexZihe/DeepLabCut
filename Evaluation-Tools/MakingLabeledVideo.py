@@ -47,7 +47,7 @@ bodyparts2plot = list(np.unique(Data.columns.get_level_values(1)))
 
 
 # https://stackoverflow.com/questions/14720331/how-to-generate-random-colors-in-matplotlib
-def get_cmap(n, name='hsv'):
+def get_cmap(n, name='gist_rainbow'): #color map changed to gist_rainbow Alex Zhang
     '''Returns a function that maps each index in 0, 1, ..., n-1 to a distinct
     RGB color; the keyword argument name must be a standard mpl colormap name.'''
     return plt.cm.get_cmap(name, n)
